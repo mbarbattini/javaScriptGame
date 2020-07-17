@@ -1,0 +1,29 @@
+Game Idea
+
+Hockey/Soccer Clicking Game:
+- There is a window with many goals on all sides
+- The goals move
+- There are many balls that float around on the window
+- Try to get the balls into the goals
+- Obstacles?
+- Clicking on a ball brings up a sling shot that can increase its speed
+
+
+Code Foundations:
+- A ball object
+- A goal object
+- A ball should bounce when it hits the wall and another ball
+- The goals should move up and down the window
+- The goal should have a left side + right side point
+- If the ball is between these points then you scored
+- The ball should know if it is going to score before it reaches the goals
+because it cant go all the way out of the window before bouncing back
+- Ball should bounce at its edges, not the center
+- Ball should have a way to be clicked on individually
+- Clicking and dragging on the ball brings up a slingshot. The ball continues
+to move with the slingshot staying in place
+- Slingshot should increase velocity more when the slingshot is larger.
+- Slingshot is a line with a circle on the end/where the mouse is. The circle
+gets larger when the slingshot is larger.
+- If the slingshot is in the opposite direction of the velocity the ball will
+slow down/reverse. Basic vector addition
