@@ -70,11 +70,13 @@ class Puck extends SideGoal {
   }
 
   slingshot(magnitude, thisPosX, thisPosY, mouseX, mouseY) {
-    let angle = tan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
+    let angle = 0;
+    angle = atan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
+    print(angle);
     //unit vector in the direction of the powerSlider
     let velocityAddition = p5.Vector.fromAngle(angle);
     //magnitude of the vector is set to how far away the powerSlider is from the puck
-    velocityAddition.setMag(magnitude * .01);
+    velocityAddition.setMag(magnitude * .05);
     this.velocity.add(velocityAddition);
 }
 }
