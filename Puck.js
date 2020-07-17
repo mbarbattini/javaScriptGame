@@ -1,4 +1,4 @@
-class Puck extends SideGoal { 
+class Puck extends SideGoal {
 
   constructor() {
     super();
@@ -60,12 +60,21 @@ class Puck extends SideGoal {
       pucks.splice(i, 1);
     }
     //topGoal
-    if (element.position.x > topGoal.rightPost.x && element.position.x < topGoal.leftPost.x && element.position.y < 100) {
-      pucks.splice(i, 1);
-    }
-    //Bottom Goal
-    if (element.position.x > bottomGoal.rightPost.x && element.position.x < bottomGoal.leftPost.x && element.position.y > width - 100) {
-      pucks.splice(i, 1);
-    }
+    // if (element.position.x > topGoal.rightPost.x && element.position.x < topGoal.leftPost.x && element.position.y < 100) {
+    //   pucks.splice(i, 1);
+    // }
+    // //Bottom Goal
+    // if (element.position.x > bottomGoal.rightPost.x && element.position.x < bottomGoal.leftPost.x && element.position.y > width - 100) {
+    // //   pucks.splice(i, 1);
+    // }
   }
+
+  slingshot(magnitude, thisPosX, thisPosY, mouseX, mouseY) {
+    let angle = tan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
+    //unit vector in the direction of the powerSlider
+    let velocityAddition = p5.Vector.fromAngle(angle);
+    //magnitude of the vector is set to how far away the powerSlider is from the puck
+    velocityAddition.setMag(magnitude * .01);
+    this.velocity.add(velocityAddition);
+}
 }
