@@ -7,7 +7,7 @@ let count = 0;
 function setup() {
   createCanvas(600,600);
   //creating the pucks and adding them to the array
-  for (i = 0; i < 100; i++) {
+  for (i = 0; i < 3; i++) {
     pucks.push(new Puck);
   }
 
@@ -17,10 +17,10 @@ function setup() {
   append(goals, leftGoal);
   rightGoal = new SideGoal();
   append(goals, rightGoal);
-  topGoal = new TopBottomGoal(true);
-  append(goals, topGoal);
-  bottomGoal = new TopBottomGoal();
-  append(goals, bottomGoal);
+  // topGoal = new TopBottomGoal(true);
+  // append(goals, topGoal);
+  // bottomGoal = new TopBottomGoal();
+  // append(goals, bottomGoal);
 }
 
 
@@ -42,6 +42,7 @@ function draw() {
       }
     }
 
+    let powerDistance = dist(pucks[i].position.x, pucks[i].position.y, mouseX, mouseY);
     //power slider remains as long as the mouse is pressed
     if (mouseIsPressed) {
       //if the object was initalized, draw the power slider
@@ -58,12 +59,15 @@ function draw() {
         strokeWeight(2);
         stroke(255);
         noFill();
-        let powerDistance = dist(pucks[i].position.x, pucks[i].position.y, mouseX, mouseY);
         let powerRadius = powerDistance * .5;
         circle(mouseX, mouseY, powerRadius);
         pop();
       }
     } else {
+      //once the mouse is not pressed, make sure velocity is added only for the puck being animated
+      if (pucks[i].proceed) {
+        pucks[i].slingshot(powerDistance, pucks[i].position.x, pucks[i].position.y, mouseX, mouseY);
+      }
       //makes sure that each puck is set back to 0 so clicking again doesn't bring up the power slider
       pucks[i].proceed = false;
       count = 0;
