@@ -21,8 +21,12 @@ class Puck extends SideGoal {
   }
 
   update() {
-    this.position.add(this.velocity);
+    //damping force
+    this.acceleration.add(-.003 * this.velocity.x, -.003 * this.velocity.y);
+    //adding velocity and acceleration
     this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
   }
 
   bounce() {
@@ -38,6 +42,8 @@ class Puck extends SideGoal {
       this.velocity.y = -this.velocity.y;
     } else if (this.position.y < this.radius) {
       this.velocity.y = -this.velocity.y;
+    } else {
+      this.velocity.y = this.velocity.y;
     }
   }
 
