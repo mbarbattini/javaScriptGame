@@ -47,7 +47,7 @@ function draw() {
     if (mouseIsPressed) {
       //if the object was initalized, draw the power slider
       if (pucks[i].proceed) {
-        // animating the slignshot
+        // animating the slingshot
         push();
         strokeWeight(6);
         stroke(255);
@@ -62,6 +62,8 @@ function draw() {
         let powerRadius = powerDistance * .5;
         circle(mouseX, mouseY, powerRadius);
         pop();
+
+        pucks[i].angleAnimation(pucks[i].position.x, pucks[i].position.y, mouseX, mouseY);
       }
     } else {
       //once the mouse is not pressed, make sure velocity is added only for the puck being animated

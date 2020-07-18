@@ -21,11 +21,14 @@ class Puck extends SideGoal {
   }
 
   update() {
-    //damping force
-    this.acceleration.add(-.003 * this.velocity.x, -.003 * this.velocity.y);
+    //damping force only occurs when velocity is above a threshold
+    if (this.velocity.mag() > .5) {
+      this.acceleration.add(-.005 * this.velocity.x, -.005 * this.velocity.y);
+    }
     //adding velocity and acceleration
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
+    //setting accelration to 0 so that it doesn't get continuously added
     this.acceleration.mult(0);
   }
 
@@ -75,14 +78,77 @@ class Puck extends SideGoal {
     // }
   }
 
+  angleAnimation( thisPosX, thisPosY, mouseX, mouseY) {
+    let angle = 0;
+    if (mouseY > thisPosY) {
+      //atan(x/y);
+      angle = atan(( thisPosX - mouseX) / ( - ( thisPosY - mouseY ) ) );
+    //I+II
+  } else {
+      //atan(y/x)
+      angle = atan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
+    }
+
+    if (mouseX > thisPosX && mouseY < thisPosY) {
+      //check if the angle is in quadrant I
+      angle = -angle + PI;
+    } else if (mouseX < thisPosX && mouseY < thisPosY) {
+      //check if the angle is in quadrant II
+      angle = -angle;
+    } else if (mouseX < thisPosX && mouseY > thisPosY) {
+      //check if the angle is in quadrant III
+      angle = angle - PI / 2;
+    } else if (mouseX > thisPosX && mouseY > thisPosY) {
+      //check if the angle is in quadrant IV
+      angle = angle + ( 3 * PI ) / 2;
+    }
+
+    let velocityAddition = p5.Vector.fromAngle(angle, 100);
+    let vx = velocityAddition.x;
+    let vy = velocityAddition.y;
+    push();
+    // translate(thisPosX, thisPosY);
+    stroke(233,44,10);
+    strokeWeight(4);
+    line(thisPosX, thisPosY, thisPosX + vx, thisPosY + vy);
+    pop();
+  }
+
   slingshot(magnitude, thisPosX, thisPosY, mouseX, mouseY) {
     let angle = 0;
-    angle = atan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
-    print(angle);
+
+    //check if the angle is in quadrant I+II or III+IV
+    //III+IV
+    if (mouseY > thisPosY) {
+      //atan(x/y);
+      angle = atan(( thisPosX - mouseX) / ( - ( thisPosY - mouseY ) ) );
+      print(angle);
+    //I+II
+  } else {
+      //atan(y/x)
+      angle = atan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
+      print(angle);
+    }
+
+    if (mouseX > thisPosX && mouseY < thisPosY) {
+      //check if the angle is in quadrant I
+      angle = -angle + PI;
+    } else if (mouseX < thisPosX && mouseY < thisPosY) {
+      //check if the angle is in quadrant II
+      angle = -angle;
+    } else if (mouseX < thisPosX && mouseY > thisPosY) {
+      //check if the angle is in quadrant III
+      angle = angle - PI / 2;
+    } else if (mouseX > thisPosX && mouseY > thisPosY) {
+      //check if the angle is in quadrant IV
+      angle = angle + (3 * PI ) / 2;
+    }
+    // print(angle);
     //unit vector in the direction of the powerSlider
     let velocityAddition = p5.Vector.fromAngle(angle);
     //magnitude of the vector is set to how far away the powerSlider is from the puck
     velocityAddition.setMag(magnitude * .05);
     this.velocity.add(velocityAddition);
-}
+    angle = 0;
+  }
 }
