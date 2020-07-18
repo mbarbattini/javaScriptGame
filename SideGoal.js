@@ -1,7 +1,7 @@
 let x;
 let y;
 
-class SideGoal extends TopBottomGoal{
+class SideGoal{
 
   constructor(left) {
     if (left) {
@@ -10,14 +10,13 @@ class SideGoal extends TopBottomGoal{
       x = width -1;
     }
 
-    super();
-    this.maxSpeed = 4;
+    this.maxSpeed = 10;
     this.width = 1;
     this.depth = 30;
     this.position = createVector(x, height / 2);
     this.leftPost = createVector(x, 0);
     this.rightPost = createVector(x, 0);
-    this.velocity = createVector(0, random(-1,1));
+    this.velocity = createVector(0, random(-3,3));
     this.velocity.setMag(this.maxSpeed);
   }
 

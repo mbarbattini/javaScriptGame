@@ -22,7 +22,7 @@ class Puck extends SideGoal {
 
   update() {
     //damping force only occurs when velocity is above a threshold
-    if (this.velocity.mag() > .5) {
+    if (this.velocity.mag() > 1) {
       this.acceleration.add(-.005 * this.velocity.x, -.005 * this.velocity.y);
     }
     //adding velocity and acceleration
@@ -68,14 +68,6 @@ class Puck extends SideGoal {
     if (element.position.y > rightGoal.rightPost.y && element.position.y < rightGoal.leftPost.y && element.position.x > width - 20) {
       pucks.splice(i, 1);
     }
-    //topGoal
-    // if (element.position.x > topGoal.rightPost.x && element.position.x < topGoal.leftPost.x && element.position.y < 100) {
-    //   pucks.splice(i, 1);
-    // }
-    // //Bottom Goal
-    // if (element.position.x > bottomGoal.rightPost.x && element.position.x < bottomGoal.leftPost.x && element.position.y > width - 100) {
-    // //   pucks.splice(i, 1);
-    // }
   }
 
   angleAnimation( thisPosX, thisPosY, mouseX, mouseY) {
@@ -122,12 +114,10 @@ class Puck extends SideGoal {
     if (mouseY > thisPosY) {
       //atan(x/y);
       angle = atan(( thisPosX - mouseX) / ( - ( thisPosY - mouseY ) ) );
-      print(angle);
     //I+II
   } else {
       //atan(y/x)
       angle = atan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
-      print(angle);
     }
 
     if (mouseX > thisPosX && mouseY < thisPosY) {

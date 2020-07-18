@@ -7,7 +7,7 @@ let count = 0;
 function setup() {
   createCanvas(600,600);
   //creating the pucks and adding them to the array
-  for (i = 0; i < 3; i++) {
+  for (i = 0; i < 15; i++) {
     pucks.push(new Puck);
   }
 
