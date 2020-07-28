@@ -1,3 +1,33 @@
+function angleFinder(thisPosX, thisPosY, mouseX, mouseY) {
+  let angle = 0;
+
+  //check if the angle is in quadrant I+II or III+IV
+  //III+IV
+  if (mouseY > thisPosY) {
+    //atan(x/y);
+    angle = atan(( thisPosX - mouseX) / ( - ( thisPosY - mouseY ) ) );
+    //I+II
+  } else {
+    //atan(y/x)
+    angle = atan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
+  }
+
+  if (mouseX > thisPosX && mouseY < thisPosY) {
+    //check if the angle is in quadrant I
+    angle = -angle + PI;
+  } else if (mouseX < thisPosX && mouseY < thisPosY) {
+    //check if the angle is in quadrant II
+    angle = -angle;
+  } else if (mouseX < thisPosX && mouseY > thisPosY) {
+    //check if the angle is in quadrant III
+    angle = angle - PI / 2;
+  } else if (mouseX > thisPosX && mouseY > thisPosY) {
+    //check if the angle is in quadrant IV
+    angle = angle + (3 * PI ) / 2;
+  }
+  return angle;
+}
+
 class Puck extends SideGoal {
 
   constructor() {
@@ -70,69 +100,24 @@ class Puck extends SideGoal {
     }
   }
 
-  angleAnimation( thisPosX, thisPosY, mouseX, mouseY) {
-    let angle = 0;
-    if (mouseY > thisPosY) {
-      //atan(x/y);
-      angle = atan(( thisPosX - mouseX) / ( - ( thisPosY - mouseY ) ) );
-    //I+II
-  } else {
-      //atan(y/x)
-      angle = atan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
-    }
+  angleAnimation(thisPosX, thisPosY, mouseX, mouseY) {
 
-    if (mouseX > thisPosX && mouseY < thisPosY) {
-      //check if the angle is in quadrant I
-      angle = -angle + PI;
-    } else if (mouseX < thisPosX && mouseY < thisPosY) {
-      //check if the angle is in quadrant II
-      angle = -angle;
-    } else if (mouseX < thisPosX && mouseY > thisPosY) {
-      //check if the angle is in quadrant III
-      angle = angle - PI / 2;
-    } else if (mouseX > thisPosX && mouseY > thisPosY) {
-      //check if the angle is in quadrant IV
-      angle = angle + ( 3 * PI ) / 2;
-    }
+    let angle = angleFinder(thisPosX, thisPosY, mouseX, mouseY);
 
     let velocityAddition = p5.Vector.fromAngle(angle, 100);
     let vx = velocityAddition.x;
     let vy = velocityAddition.y;
     push();
-    // translate(thisPosX, thisPosY);
     stroke(233,44,10);
     strokeWeight(4);
     line(thisPosX, thisPosY, thisPosX + vx, thisPosY + vy);
     pop();
   }
 
+
   slingshot(magnitude, thisPosX, thisPosY, mouseX, mouseY) {
-    let angle = 0;
 
-    //check if the angle is in quadrant I+II or III+IV
-    //III+IV
-    if (mouseY > thisPosY) {
-      //atan(x/y);
-      angle = atan(( thisPosX - mouseX) / ( - ( thisPosY - mouseY ) ) );
-    //I+II
-  } else {
-      //atan(y/x)
-      angle = atan(( - ( thisPosY - mouseY ) ) / ( thisPosX - mouseX));
-    }
-
-    if (mouseX > thisPosX && mouseY < thisPosY) {
-      //check if the angle is in quadrant I
-      angle = -angle + PI;
-    } else if (mouseX < thisPosX && mouseY < thisPosY) {
-      //check if the angle is in quadrant II
-      angle = -angle;
-    } else if (mouseX < thisPosX && mouseY > thisPosY) {
-      //check if the angle is in quadrant III
-      angle = angle - PI / 2;
-    } else if (mouseX > thisPosX && mouseY > thisPosY) {
-      //check if the angle is in quadrant IV
-      angle = angle + (3 * PI ) / 2;
-    }
+    let angle = angleFinder(thisPosX, thisPosY, mouseX, mouseY);
     // print(angle);
     //unit vector in the direction of the powerSlider
     let velocityAddition = p5.Vector.fromAngle(angle);
